@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gallery · Agniveer Defence Academy</title>
+  <meta name="description" content="Photo gallery of Agniveer Defence Academy — daily training, campus and grounds." />
+  <meta name="theme-color" content="#0b2a1a" />
+  <link rel="canonical" href="https://agniveersadda.com/gallery" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    .page-head { background: var(--green-900); color: #fff; padding: 54px 0 40px; text-align: center; }
+    .page-head h1 { font-size: clamp(2rem, 5vw, 3rem); }
+    .page-head p { color: #cdd9d0; margin-top: 8px; }
+    .gallery-empty { text-align: center; color: var(--muted); padding: 30px 0; }
+    .cap-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .cap-grid figure { background:#fff; border:1px solid var(--line); border-radius: var(--radius-sm); overflow:hidden; box-shadow: var(--shadow); }
+    .cap-grid img { width:100%; height:240px; object-fit:cover; display:block; }
+    .cap-grid figcaption { padding:10px 14px; font-size:.9rem; color:var(--muted); }
+    @media (max-width:900px){ .cap-grid{grid-template-columns:repeat(2,1fr);} }
+    @media (max-width:560px){ .cap-grid{grid-template-columns:1fr;} .cap-grid img{height:220px;} }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER / NAV -->
+  <header class="site-header" id="top">
+    <div class="container nav-wrap">
+      <a href="index.html" class="brand" aria-label="Agniveer Defence Academy home">
+        <span class="brand-badge" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.4 8.5 8 11 4.6-2.5 8-6 8-11V5l-8-3z"/><path d="m9 12 2 2 4-4"/></svg>
+        </span>
+        <span class="brand-text">
+          <strong>AGNIVEER</strong>
+          <small>DEFENCE ACADEMY</small>
+        </span>
+      </a>
+      <nav class="main-nav" id="mainNav" aria-label="Primary">
+        <a href="index.html#about">About</a>
+        <a href="index.html#programs">Programs</a>
+        <a href="index.html#features">Facilities</a>
+        <a href="index.html#campus">Campus</a>
+        <a href="index.html#director">Director</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="index.html#contact">Contact</a>
+        <a href="tel:+919010575723" class="btn btn-call btn-sm">Call Now</a>
+      </nav>
+      <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mainNav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- PAGE HEADER -->
+  <section class="page-head">
+    <div class="container">
+      <h1>Academy Gallery</h1>
+      <p>Daily training, campus life and proud moments at Agniveer Defence Academy.</p>
+    </div>
+  </section>
+
+  <!-- LATEST (coach uploads) -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Latest Photos</p>
+        <h2>Fresh from the Academy</h2>
+        <p class="section-lead">Updated regularly by our coaches.</p>
+      </div>
+      <div class="cap-grid" id="latestGrid"></div>
+      <p class="gallery-empty" id="latestEmpty">Loading latest photos…</p>
+    </div>
+  </section>
+
+  <!-- HIGHLIGHTS (curated) -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Highlights</p>
+        <h2>Our Campus &amp; Forces</h2>
+      </div>
+      <div class="gallery-grid">
+        <img src="images/ground-2.jpg" alt="Training ground" loading="lazy" />
+        <img src="images/ground-1.jpg" alt="Training ground with markers" loading="lazy" />
+        <img src="images/campus-gate.jpg" alt="Academy entrance gate" loading="lazy" />
+        <img src="images/campus-building.jpg" alt="Hostel and academic building" loading="lazy" />
+        <img src="images/army.jpg" alt="Indian Army soldiers at India Gate" loading="lazy" />
+        <img src="images/navy.jpg" alt="Indian Navy warship" loading="lazy" />
+        <img src="images/airforce.jpg" alt="Indian Air Force Su-30MKI" loading="lazy" />
+        <img src="images/g2.jpg" alt="HAL Tejas in flight" loading="lazy" />
+        <img src="images/g6.jpg" alt="Cadets of the Indian Naval Academy" loading="lazy" />
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <div class="brand">
+          <span class="brand-badge" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.4 8.5 8 11 4.6-2.5 8-6 8-11V5l-8-3z"/><path d="m9 12 2 2 4-4"/></svg>
+          </span>
+          <span class="brand-text"><strong>AGNIVEER</strong><small>DEFENCE ACADEMY</small></span>
+        </div>
+        <p>Free training for Army, Navy &amp; Air Force aspirants.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <a href="index.html#about">About</a>
+        <a href="index.html#programs">Programs</a>
+        <a href="index.html#campus">Campus</a>
+        <a href="gallery.html">Gallery</a>
+      </div>
+      <div class="footer-col">
+        <h4>Programs</h4>
+        <a href="index.html#programs">Indian Army</a>
+        <a href="index.html#programs">Indian Navy</a>
+        <a href="index.html#programs">Indian Air Force</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="tel:+919010575723">+91 90105 75723</a>
+        <a href="https://wa.me/919010575723" target="_blank" rel="noopener">WhatsApp</a>
+        <span>Director: Balu Nayak</span>
+        <a href="/admin">Coach photo upload</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <p>&copy; <span id="year"></span> Agniveer Defence Academy. All rights reserved.</p>
+        <p class="footer-credit">Serving the nation, one cadet at a time.</p>
+      </div>
+    </div>
+  </footer>
+
+  <a href="tel:+919010575723" class="fab-call" aria-label="Call the academy">
+    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+  </a>
+
+  <script src="js/main.js"></script>
+  <script>
+    (function () {
+      var grid = document.getElementById('latestGrid');
+      var empty = document.getElementById('latestEmpty');
+      fetch('/api/photos').then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
+        if (!d || !d.configured) { empty.textContent = 'Photo gallery is being set up.'; return; }
+        if (!d.photos.length) { empty.textContent = 'No photos yet — check back soon!'; return; }
+        empty.style.display = 'none';
+        d.photos.forEach(function (p) {
+          var fig = document.createElement('figure');
+          var img = document.createElement('img');
+          img.src = '/photo/' + encodeURIComponent(p.key);
+          img.alt = p.caption || 'Academy photo';
+          img.loading = 'lazy';
+          fig.appendChild(img);
+          if (p.caption) {
+            var cap = document.createElement('figcaption');
+            cap.textContent = p.caption;
+            fig.appendChild(cap);
+          }
+          grid.appendChild(fig);
+        });
+      }).catch(function () { empty.textContent = 'Could not load photos right now.'; });
+    })();
+  </script>
+</body>
+</html>
