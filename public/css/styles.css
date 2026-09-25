@@ -143,7 +143,7 @@ h1, h2, h3, h4 { font-family: var(--font-head); font-weight: 600; line-height: 1
   min-height: 90vh;
   display: flex;
   align-items: center;
-  background: url("../images/hero.jpg") center/cover no-repeat;
+  background: url("../images/ground-2.jpg") center 40%/cover no-repeat;
   color: #fff;
 }
 .hero-overlay {
@@ -238,6 +238,22 @@ h1, h2, h3, h4 { font-family: var(--font-head); font-weight: 600; line-height: 1
   background: rgba(217,164,65,.14); color: var(--gold);
   border: 1px solid rgba(217,164,65,.4);
   padding: 7px 15px; border-radius: 30px; font-size: .85rem; font-weight: 500;
+}
+
+/* ---------- Campus & Grounds ---------- */
+.campus-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; }
+.campus-card {
+  background: #fff; border: 1px solid var(--line);
+  border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.campus-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+.campus-card img { width: 100%; height: 300px; object-fit: cover; display: block; transition: transform .45s ease; }
+.campus-card:hover img { transform: scale(1.04); }
+.campus-card figcaption { padding: 15px 18px; font-weight: 500; color: var(--ink); font-size: .95rem; }
+@media (max-width: 720px) {
+  .campus-grid { grid-template-columns: 1fr; }
+  .campus-card img { height: 240px; }
 }
 
 /* ---------- Gallery ---------- */
