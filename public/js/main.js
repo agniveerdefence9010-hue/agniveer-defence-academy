@@ -99,4 +99,25 @@
     note.textContent = msg;
     note.className = "form-note " + type;
   }
+
+  /* ---- Latest photos (uploaded by coaches via /admin.html) ---- */
+  (function loadLatestPhotos() {
+    var section = document.getElementById("updates");
+    var grid = document.getElementById("latestGrid");
+    if (!section || !grid) return;
+    fetch("/api/photos")
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (data) {
+        if (!data || !data.photos || !data.photos.length) return;
+        data.photos.slice(0, 12).forEach(function (p) {
+          var img = document.createElement("img");
+          img.src = "/photo/" + encodeURIComponent(p.key);
+          img.alt = p.caption || "Agniveer Defence Academy photo";
+          img.loading = "lazy";
+          grid.appendChild(img);
+        });
+        section.hidden = false;
+      })
+      .catch(function () { /* API not available (e.g. static preview) — leave hidden */ });
+  })();
 })();

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex" />
+  <title>Photo Upload · Agniveer Defence Academy</title>
+  <style>
+    :root { --green:#123a24; --green-d:#0b2a1a; --gold:#d9a441; --line:#dfe4e0; --muted:#5c6b63; }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body { font-family: system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; background:#f4f6f4; color:#14201a; line-height:1.6; }
+    header { background:var(--green-d); color:#fff; padding:18px 20px; }
+    header h1 { font-size:1.15rem; letter-spacing:.5px; }
+    header p { font-size:.82rem; color:var(--gold); }
+    .wrap { max-width:640px; margin:0 auto; padding:20px 16px 60px; }
+    .card { background:#fff; border:1px solid var(--line); border-radius:14px; padding:20px; margin-top:18px; box-shadow:0 8px 24px rgba(11,42,26,.06); }
+    h2 { font-size:1.05rem; margin-bottom:14px; }
+    label { display:block; font-weight:600; font-size:.85rem; margin:12px 0 6px; }
+    input[type=text], input[type=password], input[type=file] {
+      width:100%; padding:12px 14px; border:1.5px solid var(--line); border-radius:9px; font-size:1rem; background:#fff;
+    }
+    input:focus { outline:none; border-color:var(--green); box-shadow:0 0 0 3px rgba(18,58,36,.12); }
+    button { cursor:pointer; border:0; border-radius:9px; font-size:1rem; font-weight:600; padding:13px 18px; }
+    .btn-primary { background:var(--green); color:#fff; width:100%; margin-top:18px; }
+    .btn-primary:disabled { opacity:.55; cursor:default; }
+    .msg { margin-top:14px; padding:11px 14px; border-radius:9px; font-size:.92rem; font-weight:600; display:none; }
+    .msg.ok { display:block; background:#e6f4ea; color:#1b7a3d; }
+    .msg.err { display:block; background:#fde8e6; color:#c0392b; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:12px; margin-top:16px; }
+    .tile { border:1px solid var(--line); border-radius:10px; overflow:hidden; background:#fff; position:relative; }
+    .tile img { width:100%; height:120px; object-fit:cover; display:block; }
+    .tile .cap { padding:6px 8px; font-size:.72rem; color:var(--muted); min-height:18px; }
+    .tile .del { position:absolute; top:6px; right:6px; background:rgba(192,57,43,.92); color:#fff; border-radius:6px; padding:4px 8px; font-size:.72rem; }
+    .hint { color:var(--muted); font-size:.85rem; margin-top:6px; }
+    .empty { color:var(--muted); font-size:.9rem; padding:14px 0; }
+    a.back { color:var(--gold); font-size:.85rem; text-decoration:none; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Agniveer Defence Academy</h1>
+    <p>Coach Photo Upload</p>
+  </header>
+
+  <div class="wrap">
+    <div class="card">
+      <h2>Add a photo</h2>
+      <label for="pw">Password</label>
+      <input type="password" id="pw" placeholder="Enter upload password" autocomplete="current-password" />
+      <label class="rememberRow"><input type="checkbox" id="remember" checked style="width:auto;margin-right:6px;vertical-align:middle" />Remember password on this phone</label>
+
+      <label for="photo">Choose photo</label>
+      <input type="file" id="photo" accept="image/*" />
+      <p class="hint">Tip: on a phone you can take a new photo or pick from your gallery.</p>
+
+      <label for="caption">Caption (optional)</label>
+      <input type="text" id="caption" maxlength="200" placeholder="e.g. Morning running drill" />
+
+      <button class="btn-primary" id="uploadBtn">Upload photo</button>
+      <div class="msg" id="msg"></div>
+    </div>
+
+    <div class="card">
+      <h2>Photos on the site</h2>
+      <div id="list"><p class="empty">Loading…</p></div>
+    </div>
+
+    <p style="margin-top:18px"><a class="back" href="/">← Back to website</a></p>
+  </div>
+
+  <script>
+    var pw = document.getElementById('pw');
+    var remember = document.getElementById('remember');
+    var photo = document.getElementById('photo');
+    var caption = document.getElementById('caption');
+    var btn = document.getElementById('uploadBtn');
+    var msg = document.getElementById('msg');
+    var list = document.getElementById('list');
+
+    // Remember password (this phone only)
+    try { var saved = localStorage.getItem('ada_pw'); if (saved) pw.value = saved; } catch (e) {}
+
+    function showMsg(text, type) { msg.textContent = text; msg.className = 'msg ' + type; }
+
+    function loadList() {
+      fetch('/api/photos').then(function (r) { return r.json(); }).then(function (d) {
+        if (!d.configured) { list.innerHTML = '<p class="empty">Photo storage is not set up yet.</p>'; return; }
+        if (!d.photos.length) { list.innerHTML = '<p class="empty">No photos yet. Upload the first one above!</p>'; return; }
+        var html = '<div class="grid">';
+        d.photos.forEach(function (p) {
+          var k = encodeURIComponent(p.key);
+          html += '<div class="tile"><button class="del" data-key="' + k + '">Delete</button>' +
+                  '<img src="/photo/' + k + '" alt=""><div class="cap">' + escapeHtml(p.caption || '') + '</div></div>';
+        });
+        html += '</div>';
+        list.innerHTML = html;
+        Array.prototype.forEach.call(document.querySelectorAll('.del'), function (b) {
+          b.addEventListener('click', function () { del(b.getAttribute('data-key')); });
+        });
+      }).catch(function () { list.innerHTML = '<p class="empty">Could not load photos.</p>'; });
+    }
+
+    function escapeHtml(s){return s.replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+
+    btn.addEventListener('click', function () {
+      if (!pw.value) { showMsg('Please enter the password.', 'err'); return; }
+      if (!photo.files.length) { showMsg('Please choose a photo.', 'err'); return; }
+      try { if (remember.checked) localStorage.setItem('ada_pw', pw.value); else localStorage.removeItem('ada_pw'); } catch (e) {}
+
+      var fd = new FormData();
+      fd.append('password', pw.value);
+      fd.append('caption', caption.value);
+      fd.append('photo', photo.files[0]);
+
+      btn.disabled = true; showMsg('Uploading…', 'ok');
+      fetch('/api/upload', { method: 'POST', body: fd })
+        .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, d: d }; }); })
+        .then(function (res) {
+          btn.disabled = false;
+          if (res.ok && res.d.ok) {
+            showMsg('✓ Photo uploaded! It is now live on the website.', 'ok');
+            photo.value = ''; caption.value = '';
+            loadList();
+          } else {
+            showMsg('✗ ' + (res.d.error || 'Upload failed.'), 'err');
+          }
+        })
+        .catch(function () { btn.disabled = false; showMsg('✗ Network error. Try again.', 'err'); });
+    });
+
+    function del(key) {
+      if (!confirm('Delete this photo from the website?')) return;
+      fetch('/api/photos/' + key, { method: 'DELETE', headers: { 'x-admin-password': pw.value } })
+        .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, d: d }; }); })
+        .then(function (res) {
+          if (res.ok && res.d.ok) { showMsg('Photo deleted.', 'ok'); loadList(); }
+          else { showMsg('✗ ' + (res.d.error || 'Could not delete.'), 'err'); }
+        })
+        .catch(function () { showMsg('✗ Network error.', 'err'); });
+    }
+
+    loadList();
+  </script>
+</body>
+</html>

@@ -15,3 +15,7 @@ desktop.ini
 
 # Environment
 .env
+
+# Cloudflare local dev
+.dev.vars
+.wrangler/
